@@ -1,0 +1,13 @@
+.custom-title {
+    color: #6b28aa;
+    /* morado o el color que prefieras */
+}
+
+.custom-btn {
+    background-color: #6b28aa;
+    /* Color personalizado */
+    color: rgb(255, 255, 255);
+    /* Texto blanco */
+    border: none;
+    /* Sin borde */
+}
