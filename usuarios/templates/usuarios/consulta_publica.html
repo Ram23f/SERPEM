@@ -1,0 +1,122 @@
+{% extends "usuarios/base.html" %} {% load static %} {% block title %}Consulta{% endblock %} {% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<style>
+    body {
+        min-height: 100vh;
+        background: linear-gradient(rgba(124, 13, 124, 0.6), rgba(128, 0, 128, 0.6)),
+        url("{% static 'img/muralttlax.jpg' %}") no-repeat center center;
+        background-size: cover;
+    }
+    
+    .card {
+        backdrop-filter: blur(8px);
+        background-color: rgba(255, 255, 255, 0.85);
+    }
+    
+    .form-label {
+        font-weight: 600;
+    }
+</style>
+<link rel="stylesheet" href="{% static 'Styles/styles4.css' %}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Consulta Pública de Empresas</title>
+</head>
+
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="text-center card shadow p-4 rounded-4 mb-4">
+            <h1 class="fw-bold custom-title">Consulta Pública de Empresas</h1>
+            <p class="text-black">Busca y consulta las empresas registradas en el sistema</p>
+        </div>
+        <!-- Botón para regresar al inicio -->
+        <div class="mb-4 d-flex justify-content-end">
+            <a href="{% url 'inicio' %}" class="btn btn-outline-primary fw-bold rounded-4">
+                ⬅️ Regresar al inicio
+            </a>
+        </div>
+        <!-- Formulario de búsqueda -->
+        <div class="card shadow p-4 rounded-4 mb-4">
+            <form method="get">
+                <div class="row g-2 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Buscar por nombre, RFC o representante</label>
+                        <input type="text" name="q" class="form-control" placeholder="Buscar..." value="{{ query }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">Desde</label>
+                        <input type="date" name="fecha_inicio" class="form-control" value="{{ fecha_inicio }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">Hasta</label>
+                        <input type="date" name="fecha_fin" class="form-control" value="{{ fecha_fin }}">
+                    </div>
+                    <div class="col-md-2 d-grid">
+                        <button type="submit" class="btn custom-btn fw-bold">
+                        🔍 Buscar
+                    </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Lista de empresas -->
+        {% if empresas %}
+        <div class="row row-cols-1 g-4">
+            {% for empresa in empresas %}
+            <div class="col">
+                <div class="card shadow-sm rounded-4 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title custom-title fw-bold">{{ empresa.nombre }}</h5>
+                        <p class="mb-1"><strong>RFC:</strong> {{ empresa.rfc }}</p>
+                        <p class="mb-1"><strong>Representante:</strong> {{ empresa.representante }}</p>
+                        <p class="mb-2"><strong>Fecha de registro:</strong> {{ empresa.fecha_registro|date:"d/m/Y" }}</p>
+
+                        <h6 class="fw-semibold text-secondary">Servicios que ofrece:</h6>
+                        <ul class="mb-0">
+                            {% for servicio in empresa.servicio_set.all %}
+                            <li>{{ servicio.nombre }} - {{ servicio.descripcion }}</li>
+                            {% empty %}
+                            <li>No hay servicios registrados.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-warning text-center mt-4">
+            No se encontraron empresas registradas.
+        </div>
+        {% endif %}
+
+        <!-- Paginación -->
+        {% if empresas.has_other_pages %}
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                {% if empresas.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ empresas.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if fecha_inicio %}&fecha_inicio={{ fecha_inicio }}{% endif %}{% if fecha_fin %}&fecha_fin={{ fecha_fin }}{% endif %}">⏮ Anterior</a>
+                </li>
+                {% endif %}
+                <li class="page-item disabled">
+                    <span class="page-link">Página {{ empresas.number }} de {{ empresas.paginator.num_pages }}</span>
+                </li>
+                {% if empresas.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ empresas.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if fecha_inicio %}&fecha_inicio={{ fecha_inicio }}{% endif %}{% if fecha_fin %}&fecha_fin={{ fecha_fin }}{% endif %}">Siguiente ⏭</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
+{% endblock %}

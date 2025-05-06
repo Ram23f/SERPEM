@@ -1,0 +1,335 @@
+{% extends "usuarios/base.html" %} {% load static %} {% block title %}Mi Perfil{% endblock %} {% block content %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil de Usuario</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+        
+        .sidebar {
+            height: 100vh;
+            background-color: #6a0dad;
+            color: white;
+            padding-top: 20px;
+            position: fixed;
+            width: 250px;
+            top: 0;
+            left: 0;
+            transition: all 0.3s ease;
+            z-index: 1030;
+        }
+        
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 12px 20px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar a:hover {
+            background-color: #4a0072;
+        }
+        
+        .sidebar.hidden {
+            left: -250px;
+        }
+        
+        .content {
+            margin-left: 250px;
+            padding: 40px;
+            transition: margin-left 0.3s ease;
+        }
+        
+        .content.full {
+            margin-left: 0;
+        }
+        
+        .toggle-btn {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1040;
+            background-color: #6a0dad;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            font-size: 24px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                left: -250px;
+            }
+            .content {
+                margin-left: 0;
+            }
+        }
+        /* Estilos de tarjetas */
+        
+        .card {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-pic {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #6a0dad;
+            box-shadow: 0 0 10px rgba(106, 13, 173, 0.5);
+        }
+        
+        .custom-title {
+            color: #6a0dad;
+        }
+        
+        .section-title {
+            color: #4a0072;
+            border-bottom: 2px solid #6a0dad;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .custom-btn {
+            background-color: #6a0dad;
+            color: white;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .custom-btn:hover {
+            background-color: #4a0072;
+            color: white;
+        }
+        
+        .notification {
+            background-color: #f3e5f5;
+            border-left: 5px solid #6a0dad;
+        }
+        
+        .empresa-card {
+            border-left: 5px solid #6a0dad;
+            background-color: #f5f5f5;
+        }
+    </style>
+    <style>
+        .fab-notificacion {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #6f42c1;
+            /* morado profesional */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            font-size: 24px;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+        
+        .fab-notificacion:hover {
+            background-color: #5a32a3;
+        }
+        /* Panel de notificaciones oculto */
+        
+        #panelNotificaciones {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            display: none;
+        }
+        
+        #panelNotificaciones h5 {
+            background-color: #6f42c1;
+            color: white;
+            margin: 0;
+            padding: 10px;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+        
+        .notificacion-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .notificacion-item:last-child {
+            border-bottom: none;
+        }
+        
+        .notificacion-item small {
+            color: gray;
+            font-size: 12px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Botón toggle -->
+    <button id="toggleSidebar" class="toggle-btn">
+        ☰
+    </button>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <h4 class="text-center mb-4 fw-bold">Mi Panel</h4>
+        <a href="{% url 'registrar_empresa' %}">
+            ➕ Registrar Empresa
+        </a>
+        <a href="{% url 'subir_documento_empresa' %}">
+            📎 Mis Documentos
+        </a>
+        <a href="{% url 'dashboard' %}">
+            📊 Ir al Panel
+        </a>
+        <div class="text-center">
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" style="background-color: #6f42c1">Cerrar sesión</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div id="mainContent" class="content">
+
+        <!-- Tarjeta de perfil -->
+        <div class="card shadow p-4 mb-4 text-center">
+            <div class="d-flex flex-column align-items-center">
+                {% if user.foto %}
+                <img src="{{ user.foto.url }}" alt="Foto de perfil" class="profile-pic mb-3"> {% else %}
+                <img src="{% static 'img/perfil.jpg' %}" alt="Foto por defecto" class="profile-pic mb-3"> {% endif %}
+                <h1 class="fw-bold custom-title mb-0">{{ user.get_full_name|default:user.username }}</h1>
+                <p class="text-muted mb-0">{{ user.email }}</p>
+                <small class="text-secondary">Usuario desde: {{ user.date_joined|date:"d M Y" }}</small>
+            </div>
+        </div>
+
+        {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+            <div class="alert alert-info rounded-3 shadow-sm">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Empresas -->
+        <div class="card shadow p-4 mb-4">
+            <h3 class="fw-bold section-title">🏢 Mis Empresas</h3>
+            {% if empresas %}
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for empresa in empresas %}
+                <div class="col">
+                    <div class="card empresa-card h-100 rounded-4 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="fw-bold custom-title">{{ empresa.nombre }}</h5>
+                            {% if empresa.validado %}
+                            <p class="text-success mb-1">✅ Validada</p>
+                            <a href="{% url 'descargar_constancia' empresa.id %}" class="btn btn-success btn-sm rounded-3 mb-2">
+                                📄 Constancia
+                            </a> {% else %}
+                            <p class="text-warning">⏳ En espera de validación</p>
+                            {% endif %}
+
+                            <div class="d-grid gap-2 mt-2">
+                                <a href="{% url 'registrar_producto' empresa.id %}" class="btn custom-btn btn-sm">➕ Agregar Producto</a>
+                                <a href="{% url 'productos_empresa' empresa.id %}" class="btn btn-outline-dark btn-sm">📦 Ver Productos</a>
+                                <a href="{% url 'registrar_servicio' empresa.id %}" class="btn custom-btn btn-sm">➕ Agregar Servicio</a>
+                                <a href="{% url 'servicios_empresa' empresa.id %}" class="btn btn-outline-dark btn-sm">📦 Ver Servicios</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p>No tienes empresas registradas.</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS (necesario solo si quieres dropdowns/modals) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script para toggle -->
+    <script>
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('mainContent');
+
+        toggleBtn.addEventListener('click', function() {
+            sidebar.classList.toggle('hidden');
+            content.classList.toggle('full');
+        });
+    </script>
+
+    <!-- Botón flotante -->
+    <button class="fab-notificacion" onclick="toggleNotificaciones()">
+    🔔
+</button>
+
+    <!-- Panel de notificaciones -->
+    <div id="panelNotificaciones">
+        <h5>Notificaciones</h5>
+        {% if notificaciones %} {% for noti in notificaciones %}
+        <div class="notificacion-item">
+            {{ noti.mensaje }}<br>
+            <small>{{ noti.fecha|date:"d M Y, H:i" }}</small>
+        </div>
+        {% endfor %} {% else %}
+        <div class="notificacion-item text-center text-muted">
+            No tienes notificaciones.
+        </div>
+        {% endif %}
+    </div>
+    <script>
+        function toggleNotificaciones() {
+            const panel = document.getElementById('panelNotificaciones');
+            if (panel.style.display === 'block') {
+                panel.style.display = 'none';
+            } else {
+                panel.style.display = 'block';
+            }
+        }
+    </script>
+
+</body>
+
+
+</html>
+{% endblock %}

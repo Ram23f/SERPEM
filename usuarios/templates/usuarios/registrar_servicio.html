@@ -1,0 +1,100 @@
+{% extends "usuarios/base.html" %} {% load static %} {% block title %}Registrar Servicio para {{ empresa.nombre }}{% endblock %} {% block content %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Servicio</title>
+    <link rel="stylesheet" href="{% static 'Styles/styles4.css' %}">
+    <style>
+        body {
+            background-color: #f3e8ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .card {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+        
+        h2 {
+            color: #6f42c1;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        form input,
+        form select,
+        form textarea {
+            padding: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+        
+        form input:focus,
+        form select:focus,
+        form textarea:focus {
+            border-color: #6f42c1;
+            outline: none;
+        }
+        
+        button[type="submit"] {
+            background-color: #6f42c1;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #5936a2;
+        }
+        
+        .btn-back {
+            display: inline-block;
+            background-color: #d6bbfc;
+            color: #4a2e7f;
+            padding: 8px 16px;
+            border-radius: 50px;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 1rem;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-back:hover {
+            background-color: #c1a0f7;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h2>🛠️ Registrar Servicio para {{ empresa.nombre }}</h2>
+
+        <form method="post">
+            {% csrf_token %} {{ form.as_p }}
+            <button type="submit">Registrar Servicio</button>
+        </form>
+
+        <a href="{% url 'profile' %}" class="btn-back">⬅️ Volver al Perfil</a>
+    </div>
+</body>
+
+</html>
+{% endblock %}

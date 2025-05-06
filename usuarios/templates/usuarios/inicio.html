@@ -1,0 +1,63 @@
+{% extends "usuarios/base.html" %} {% load static %} {% block title %}Inicio{% endblock %} {% block content %}
+<link rel="stylesheet" href="{% static 'Styles/styles1.css' %}">
+<div class="container">
+
+    <!-- Hero Section con fondo claro -->
+    <section class="bg-white p-3 rounded shadow mb-5 text-center border border-2 border-light">
+        <div class="text-start">
+            <a href="https://www.tlaxcala.gob.mx/ "><img src="{% static 'img/tlax.png' %} " alt="Logo " width="200" class="imagen"></a>
+        </div>
+        <!-- Botón consulta pública alineado a la derecha -->
+        <div class="text-end mb-3 ">
+            <a href="{% url 'login' %} " class="btn custom-btn ">
+                <i class="bi bi-box-arrow-in-right "></i> Iniciar Sesión
+            </a>
+        </div>
+
+        <div class="text-arriba ">
+            <h1 class="mb-3 fw-bold custom-title ">Bienvenido al nuevo SERPEM</h1>
+            <h4 class="text-muted mb-4 ">Sistema Electrónico de Registro y Permisos Mercantiles</h4>
+        </div>
+        <!-- Botones principales -->
+        <div class="d-flex justify-content-center flex-wrap gap-3 ">
+            <a href="{% url 'consulta_publica' %} " class="btn btn-outline-primary fw-bold rounded-4">
+                <i class="bi bi-search "></i>🔍 Consulta Pública
+            </a>
+        </div>
+    </section>
+
+    <!-- Sección informativa con íconos e imágenes -->
+
+    <section class="bg-custom-green p-4 rounded-top shadow mb-5 text-center text-white">
+        <div class="row g-4">
+            <div class="col-12">
+                <h5 class="subtitulo-label">En la Ciudad de Tlaxcala puedes abrir un negocio en cuestion de minutos</h5>
+            </div>
+        </div>
+    </section>
+    <section class="bg-custom-white p-4 rounded-top shadow mb-5 text-center text-black">
+        <div class="col-md-4 text-start">
+            <h1 class="fw-semibold text-muted" style="font-size: 40px;"><strong>¡Bienvenido(a) a SERPEM!</strong></h1>
+        </div>
+        <br>
+        <div class="text-start">
+            <h3 class=" fw-semibold text-muted" style="font-size: 35px;">Registra y realiza todos los trámites <br> digitales de tu negocio desde este sitio.</h3>
+        </div>
+        <div class="text-end col-md-11 ">
+            <img src="{% static 'img/negocios.png' %} " alt="Logo " width="400 " class="imagen " style="margin-top: -260px ">
+        </div>
+        <br>
+        <div class="text-center">
+            <h3 class="fw-semibold text-muted" style="font-size: 35px;">¡Estamos mejorando para ti! Para registrar la información de un negocio que ya cuenta con aviso o permiso de funcionamiento</h3>
+        </div>
+    </section>
+    <div class="text-center">
+        <h5 class="subtitulo-label">Un establecimiento que ya cuenta con aviso o permiso de apertura</h5>
+        <br>
+        <a href="{% url 'registro' %} " class="btn btn-secondary px-4 py-2" style="background-color: #5f2285;">
+            <i class="bi bi-person-plus-fill "></i> Registrarse
+        </a>
+    </div>
+
+</div>
+{% endblock %}

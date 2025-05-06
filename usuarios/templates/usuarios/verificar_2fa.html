@@ -1,0 +1,17 @@
+{% extends "usuarios/base.html" %} {% block title %}Verificación 2FA{% endblock %} {% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <h2 class="text-center">Verificación 2FA</h2>
+        <p>Hemos enviado un código de autenticación a tu correo {{user.correo}}. Ingresa el código para continuar.</p>
+
+        <form method="POST" action="{% url 'verificar_2fa' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="codigo">Código 2FA:</label>
+                <input type="text" class="form-control" name="codigo" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Verificar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

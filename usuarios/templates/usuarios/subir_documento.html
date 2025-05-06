@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Subir Documento Oficial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2,
+        h3 {
+            color: #333;
+        }
+        
+        form {
+            margin-top: 20px;
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        form p {
+            margin-bottom: 15px;
+        }
+        
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background: #218838;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        
+        ul li {
+            background: #f8f9fa;
+            padding: 12px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            text-align: left;
+        }
+        
+        ul li a {
+            text-decoration: none;
+            color: #007bff;
+            margin-left: 10px;
+        }
+        
+        ul li a:hover {
+            text-decoration: underline;
+        }
+        
+        .no-docs {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .btn-back {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            background: #6c757d;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+        
+        .btn-back:hover {
+            background: #5a6268;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>📄 Subir documento oficial</h2>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %} {{ form.as_p }}
+            <button type="submit">Subir 📄</button>
+        </form>
+
+        <h3>📂 Mis documentos subidos</h3>
+        <ul>
+            {% for doc in documentos %}
+            <li>📑 {{ doc.get_tipo_display }}
+                <a href="{{ doc.archivo.url }}" target="_blank">Ver</a>
+                <span style="color: gray; font-size: 14px;">— Subido el {{ doc.fecha_subida|date:"d/m/Y" }}</span>
+            </li>
+            {% empty %}
+            <li class="no-docs">❌ No has subido ningún documento.</li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'profile' %}" class="btn-back">⬅️ Volver</a>
+    </div>
+</body>
+
+</html>

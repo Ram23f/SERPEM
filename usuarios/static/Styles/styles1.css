@@ -1,0 +1,54 @@
+.custom-title {
+    color: #6b28aa;
+    /* morado o el color que prefieras */
+}
+
+.text-arriba {
+    margin-top: -150px;
+    /* Mueve el texto hacia arriba */
+}
+
+.custom-btn {
+    margin-top: -200px;
+    margin-left: -30px;
+    background-color: #6b28aa;
+    /* Color personalizado */
+    color: white;
+    /* Texto blanco */
+    border: none;
+    /* Sin borde */
+}
+
+.purple-btn {
+    background-color: #6b28aa;
+    /* Color personalizado */
+    color: white;
+    /* Texto blanco */
+    border: none;
+    /* Sin borde */
+}
+
+.custom-btn:hover {
+    background-color: #5f2285;
+    /* Color al pasar el mouse */
+}
+
+.imagen {
+    position: relative;
+    top: 20px;
+    left: 20px;
+}
+
+.bg-custom-green {
+    background-color: #6b28aa !important;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    min-height: 60px;
+}
+
+.subtitulo-label {
+    font-size: 1.25rem;
+    font-weight: 500;
+}

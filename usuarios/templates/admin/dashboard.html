@@ -1,0 +1,125 @@
+{% extends "usuarios/base.html" %} {% load static %} {% block title %}Panel de Administración{% endblock %} {% block content %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Administración</title>
+    <link rel="stylesheet" href="{% static 'Styles/styles4.css' %}">
+    <style>
+        body {
+            background-color: #f3e8ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        h1 {
+            color: #6f42c1;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat {
+            background: linear-gradient(135deg, #9d6dfc, #6f42c1);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            width: 30%;
+            min-width: 200px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat h3 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+        
+        .stat p {
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+        
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            background-color: #6f42c1;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: background-color 0.3s;
+            font-weight: 600;
+        }
+        
+        .btn:hover {
+            background-color: #5936a2;
+        }
+        
+        @media (max-width: 768px) {
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            .stat {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>📊 Panel de Administración</h1>
+
+        <div class="stats">
+            <div class="stat">
+                <h3>{{ total_usuarios }}</h3>
+                <p>Usuarios Registrados</p>
+            </div>
+            <div class="stat">
+                <h3>{{ usuarios_activos }}</h3>
+                <p>Usuarios Activos</p>
+            </div>
+            <div class="stat">
+                <h3>{{ usuarios_inactivos }}</h3>
+                <p>Usuarios Inactivos</p>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="{% url 'lista_empresas' %}" class="btn">🏢 Lista de Empresas</a>
+            <a href="{% url 'lista_todos_servicios' %}" class="btn">🛠️ Ver Todos los Servicios</a>
+            <a href="{% url 'documentos_admin' %}" class="btn">📄 Documentos de Empresas</a>
+        </div>
+    </div>
+</body>
+
+</html>
+{% endblock %}

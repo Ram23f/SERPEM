@@ -1,0 +1,114 @@
+{% extends "usuarios/base.html" %} {% load static %} {% block title %}Editar Empresa{% endblock %} {% block content %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Empresa</title>
+    <link rel="stylesheet" href="{% static 'Styles/styles5.css' %}">
+    <style>
+        body {
+            background-color: #f2f6fc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            text-align: center;
+            color: #17a2b8;
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+        
+        form p {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="file"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 1rem;
+        }
+        
+        button[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #218838;
+        }
+        
+        .btn-cancel {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #dc3545;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            margin-top: 15px;
+            transition: 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .btn-cancel:hover {
+            background-color: #c82333;
+        }
+        
+        .btns {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>✏️ Editar Empresa</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %} {{ form.as_p }}
+
+            <div class="btns">
+                <button type="submit">💾 Guardar Cambios</button>
+                <a href="{% url 'lista_empresas' %}" class="btn-cancel">❌ Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
+{% endblock %}

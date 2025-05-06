@@ -1,0 +1,51 @@
+{% extends "usuarios/base.html" %} {% load static %} {% block title %}Registro{% endblock %} {% block content %}
+<link rel="stylesheet" href="{% static 'Styles/styles2.css' %}">
+<style>
+    body {
+        min-height: 100vh;
+        background: linear-gradient(rgba(128, 0, 128, 0.6), rgba(128, 0, 128, 0.6)),
+        url("{% static 'img/mural.jpg' %}") no-repeat center center;
+        background-size: cover;
+    }
+    
+    .card {
+        backdrop-filter: blur(8px);
+        background-color: rgba(255, 255, 255, 0.85);
+    }
+    
+    .form-label {
+        font-weight: 600;
+    }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center" style=" min-height: 70vh">
+    <div class="card shadow-lg p-4 rounded-4 " style="max-width: 500px; width: 100%; ">
+        <h2 class="text-center mb-4 fw-bold custom-title">Registra tus datos</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3 ">
+                <label for="id_nombre " class="form-label fw-semibold ">Nombre</label> {{ form.username }}
+            </div>
+
+            <div class="mb-3 ">
+                <label for="id_correo " class="form-label fw-semibold ">Correo Electrónico</label> {{ form.correo }}
+            </div>
+
+            <div class="mb-3 ">
+                <label for="id_password1 " class="form-label fw-semibold ">Contraseña</label> {{ form.password1 }}
+            </div>
+
+            <div class="mb-3 ">
+                <label for="id_password2 " class="form-label fw-semibold ">Confirmar Contraseña</label> {{ form.password2 }}
+            </div>
+
+            <button type="submit " class="btn custom-btn w-100 py-2 fw-bold ">
+                 Registrarse
+            </button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "usuarios/base.html" %} {% load static %} {% block title %}Iniciar Sesión{% endblock %} {% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<link rel="stylesheet" href="{% static 'Styles/styles3.css' %}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(rgba(128, 0, 128, 0.6), rgba(128, 0, 128, 0.6)),
+            url("{% static 'img/palacio.jpg' %}") no-repeat center center;
+            background-size: cover;
+        }
+        
+        .card {
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.85);
+        }
+        
+        .form-label {
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container d-flex justify-content-center align-items-center" style=" min-height: 70vh">
+        <div class="card shadow-lg p-4 rounded-4" style="max-width: 500px; width: 100%;">
+            <h2 class="text-center mb-4 fw-bold custom-title">Iniciar Sesión</h2>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="id_username" class="form-label">Nombre de Usuario</label> {{ form.username }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_password" class="form-label">Contraseña</label> {{ form.password }}
+                </div>
+
+                <button type="submit" class="btn custom-btn w-100 py-2 fw-bold"> Ingresar
+            </button>
+            </form>
+
+            <div class="text-center mt-3">
+                <a href="{% url 'password_reset' %}" class="text-decoration-none text-muted">¿Olvidaste tu contraseña?</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+{% endblock %}

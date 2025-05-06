@@ -1,0 +1,217 @@
+{% extends "usuarios/base.html" %} {% load static %} {% block title %}Lista de Empresas{% endblock %} {% block content %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Empresas</title>
+    <link rel="stylesheet" href="{% static 'Styles/styles4.css' %}">
+    <style>
+        body {
+            background-color: #f9f9fc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: #6f42c1;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 2rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        
+        thead {
+            background: linear-gradient(90deg, #6f42c1, #8e4dff);
+            color: white;
+        }
+        
+        th {
+            padding: 14px 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px 10px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 0.95rem;
+            color: #333;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f4f0ff;
+        }
+        
+        tr:hover {
+            background-color: #ece4ff;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: white;
+            white-space: nowrap;
+        }
+        
+        .badge-rfc {
+            background-color: #6f42c1;
+        }
+        
+        .badge-ok {
+            background-color: #28a745;
+        }
+        
+        .badge-no {
+            background-color: #dc3545;
+        }
+        
+        .actions a {
+            margin: 1px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: 0.2s ease;
+            display: inline-block;
+        }
+        
+        .btn-edit {
+            background-color: #6f42c1;
+            color: white;
+        }
+        
+        .btn-edit:hover {
+            background-color: #5632a0;
+        }
+        
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-delete:hover {
+            background-color: #b52a39;
+        }
+        
+        .btn-validate {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-validate:hover {
+            background-color: #1c6d30;
+        }
+        
+        .btn-register {
+            display: inline-block;
+            margin-top: 30px;
+            background-color: #6f42c1;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 12px rgba(111, 66, 193, 0.4);
+        }
+        
+        .btn-register:hover {
+            background-color: #5632a0;
+        }
+        
+        .btn-register-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 992px) {
+            table {
+                font-size: 0.85rem;
+            }
+            .actions a {
+                padding: 4px 8px;
+                font-size: 0.75rem;
+            }
+            .btn-register {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>🏢 Lista de Empresas</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>RFC</th>
+                    <th>Teléfono</th>
+                    <th>Correo</th>
+                    <th>RFC Doc</th>
+                    <th>Identificación</th>
+                    <th>Acta</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for empresa in empresas %}
+                <tr>
+                    <td>{{ empresa.nombre }}</td>
+                    <td>{{ empresa.rfc }}</td>
+                    <td>{{ empresa.telefono }}</td>
+                    <td>{{ empresa.correo }}</td>
+
+                    <td>
+                        {% if empresa.documento_rfc %}
+                        <a href="{{ empresa.documento_rfc.url }}" target="_blank" class="badge badge-rfc">📄 Ver</a> {% else %} <span class="badge badge-no">❌ No</span> {% endif %}
+                    </td>
+
+                    <td>
+                        {% if empresa.documento_identificacion %}
+                        <a href="{{ empresa.documento_identificacion.url }}" target="_blank" class="badge badge-rfc">📄 Ver</a> {% else %} <span class="badge badge-no">❌ No</span> {% endif %}
+                    </td>
+
+                    <td>
+                        {% if empresa.documento_constitutiva %}
+                        <a href="{{ empresa.documento_constitutiva.url }}" target="_blank" class="badge badge-rfc">📄 Ver</a> {% else %} <span class="badge badge-no">❌ No</span> {% endif %}
+                    </td>
+
+                    <td class="actions">
+                        <a href="{% url 'editar_empresa' empresa.id %}" class="btn-edit">✏️ Editar</a>
+                        <a href="{% url 'eliminar_empresa' empresa.id %}" class="btn-delete">🗑️</a> {% if not empresa.validado %}
+                        <a href="{% url 'validar_empresa' empresa.id %}" class="btn-validate">✔️</a> {% else %} <span class="badge badge-ok">✅</span> {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="btn-register-container">
+            <a href="{% url 'registrar_empresa' %}" class="btn-register">➕ Registrar Nueva Empresa</a>
+        </div>
+    </div>
+</body>
+
+</html>
+{% endblock %}

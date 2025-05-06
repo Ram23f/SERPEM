@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de {{ empresa.nombre }}</title>
+</head>
+
+<body>
+    <h1>Historial de acciones: {{ empresa.nombre }}</h1>
+
+    {% if historial %}
+    <ul>
+        {% for evento in historial %}
+        <li>
+            <strong>{{ evento.fecha|date:"d/m/Y H:i" }}</strong> — {{ evento.accion }} por {{ evento.usuario.get_full_name|default:evento.usuario.username }}<br>
+            <em>{{ evento.observaciones }}</em>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No hay eventos registrados en el historial de esta empresa.</p>
+    {% endif %}
+
+    <a href="{% url 'consulta_publica_empresas' %}">⬅ Volver</a>
+</body>
+
+</html>

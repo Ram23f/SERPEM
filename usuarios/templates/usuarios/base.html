@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Identidad{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        footer {
+            background-color: #6b28aa;
+            color: white;
+        }
+        
+        .social-icons img {
+            width: 30px;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    {% if user.is_authenticated %} {% else %} {% endif %}
+
+    <!-- Contenido principal -->
+    <main class="container my-4 flex-grow-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 mt-auto">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4 text-start">
+                    <!-- LOGO -->
+                    {% load static %}
+                    <a href="https://cemert.gob.mx/"><img src="{% static 'img/cemert.png' %}" alt="Logo" width="190"></a>
+                </div>
+                <div class="col-md-4 text-center">
+                    <!-- Redes sociales -->
+                    <p>Siguenos en nuestras Redes Sociales</p>
+                    <a href="https://www.facebook.com/SEDECOTLAXCALA/"><img src="{% static 'img/Facebook.png' %}" alt="Logo" width="50"></a>
+                    <a href="https://www.instagram.com/sedecotlaxcala/"><img src="{% static 'img/instagram.png' %}" alt="Logo" width="50"></a>
+                    <a href="https://x.com/SEDECO_TLAXCALA"><img src="{% static 'img/twitter.png' %}" alt="Logo" width="50"></a>
+                </div>
+                <div class="col-md-4 text-end">
+                    <!-- Texto -->
+                    <p class="mb-0">&copy; 2025 Sistema Electrónico de <br>Registro y Permisos Mercantiles</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+
+</html>

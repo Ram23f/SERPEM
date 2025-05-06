@@ -1,0 +1,132 @@
+{% extends "usuarios/base.html" %} {% load static %} {% block title %}Documentos de Empresas{% endblock %} {% block content %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Documentos de Empresas</title>
+    <link rel="stylesheet" href="{% static 'Styles/styles4.css' %}">
+    <style>
+        body {
+            background-color: #f9f9fc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #6f42c1;
+            margin-bottom: 25px;
+            font-size: 2.2rem;
+        }
+        
+        .document-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .document-item {
+            background: #f4f0ff;
+            border: 1px solid #ddd;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: background-color 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .document-item:hover {
+            background-color: #ece4ff;
+        }
+        
+        .document-name {
+            font-size: 1.1rem;
+            color: #333;
+        }
+        
+        .company-name {
+            font-size: 0.95rem;
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        .empty-msg {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .btn-back-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .btn-back {
+            text-decoration: none;
+            background-color: #007bff;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: 0.3s ease;
+        }
+        
+        .btn-back:hover {
+            background-color: #0056b3;
+        }
+        
+        @media (max-width: 768px) {
+            .document-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .document-name {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>📂 Documentos de Empresas Registradas</h1>
+
+        {% if documentos %}
+        <ul class="document-list">
+            {% for documento in documentos %}
+            <li class="document-item">
+                <div>
+                    <div class="document-name">📄 {{ documento.nombre }}</div>
+                    <div class="company-name">Empresa: {{ documento.empresa.nombre }}</div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <div class="empty-msg">
+            ❌ No hay documentos disponibles.
+        </div>
+        {% endif %}
+
+        <div class="btn-back-container">
+            <a href="{% url 'profile' %}" class="btn-back">🔙 Volver al Perfil</a>
+        </div>
+    </div>
+</body>
+
+</html>
+{% endblock %}

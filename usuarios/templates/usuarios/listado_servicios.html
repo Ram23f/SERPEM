@@ -1,0 +1,128 @@
+{% extends "usuarios/base.html" %} {% load static %} {% block title %}Servicios de {{ empresa.nombre }}{% endblock %} {% block content %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Servicios de {{ empresa.nombre }}</title>
+    <link rel="stylesheet" href="{% static 'Styles/styles4.css' %}">
+    <style>
+        body {
+            background-color: #f3e8ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        h2 {
+            color: #6f42c1;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+        
+        table th,
+        table td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: center;
+        }
+        
+        table th {
+            background-color: #d6bbfc;
+            color: #4a2e7f;
+        }
+        
+        table tr:nth-child(even) {
+            background-color: #f9f5ff;
+        }
+        
+        table tr:hover {
+            background-color: #ede2ff;
+        }
+        
+        .btn {
+            padding: 6px 12px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-validar {
+            background-color: #6f42c1;
+            color: white;
+        }
+        
+        .btn-validar:hover {
+            background-color: #5936a2;
+        }
+        
+        .btn-back {
+            background-color: #d6bbfc;
+            color: #4a2e7f;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-back:hover {
+            background-color: #c1a0f7;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>🛠️ Servicios de {{ empresa.nombre }}</h2>
+
+        <table>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio Aproximado</th>
+                <th>Validado</th>
+                {% if request.user.is_staff %}
+                <th>Acciones</th>
+                {% endif %}
+            </tr>
+            {% for servicio in servicios %}
+            <tr>
+                <td>{{ servicio.nombre }}</td>
+                <td>{{ servicio.descripcion }}</td>
+                <td>${{ servicio.precio_aproximado }}</td>
+                <td>{{ servicio.validado|yesno:"Sí,No" }}</td>
+                {% if request.user.is_staff %}
+                <td>
+                    {% if not servicio.validado %}
+                    <a href="{% url 'validar_servicio' servicio.id %}" class="btn btn-validar">✔️ Validar</a> {% else %} ✅ Validado {% endif %}
+                </td>
+                {% endif %}
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No hay servicios registrados.</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <a href="{% url 'profile' %}" class="btn-back">⬅️ Volver al Perfil</a>
+    </div>
+</body>
+
+</html>
+{% endblock %}
